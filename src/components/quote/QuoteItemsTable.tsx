@@ -38,8 +38,7 @@ export function QuoteItemsTable({
               <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Width</th>
               <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Height</th>
               <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Depth</th>
-              <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Count & Price</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">

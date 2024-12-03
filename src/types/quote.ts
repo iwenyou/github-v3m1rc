@@ -6,6 +6,7 @@ export interface CabinetItem {
   height: number;
   depth: number;
   price: number;
+  count: number;
   isPriceLocked?: boolean;
 }
 

@@ -18,11 +18,18 @@ export function QuoteItem({ item, onUpdate, onDelete }: QuoteItemProps) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [displayedPrice, setDisplayedPrice] = useState(0);
   const [isPriceLocked, setIsPriceLocked] = useState(true);
+  const [count, setCount] = useState(item.count || 1);
 
   useEffect(() => {
     setProducts(getProducts());
     setMaterials(getMaterials());
   }, []);
+
+  useEffect(() => {
+    if (count !== item.count) {
+      onUpdate(item.id, { count });
+    }
+  }, [count, item.count, item.id, onUpdate]);
 
   useEffect(() => {
     const product = products.find(p => p.id === item.productId);
@@ -124,6 +131,13 @@ export function QuoteItem({ item, onUpdate, onDelete }: QuoteItemProps) {
         <div className="flex items-center justify-end space-x-2">
           <input
             type="number"
+            value={count}
+            onChange={(e) => setCount(Math.max(1, parseInt(e.target.value) || 1))}
+            min="1"
+            className="block w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-right"
+          />
+          <input
+            type="number"
             value={displayedPrice}
             onChange={(e) => handlePriceChange(Number(e.target.value))}
             disabled={isPriceLocked}
@@ -140,15 +154,13 @@ export function QuoteItem({ item, onUpdate, onDelete }: QuoteItemProps) {
           >
             {isPriceLocked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
           </button>
+          <button 
+            onClick={() => onDelete(item.id)}
+            className="text-red-600 hover:text-red-900"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
         </div>
-      </td>
-      <td className="px-3 py-4 whitespace-nowrap text-right">
-        <button 
-          onClick={() => onDelete(item.id)}
-          className="text-red-600 hover:text-red-900 ml-2"
-        >
-          <Trash2 className="h-4 w-4" />
-        </button>
       </td>
     </tr>
   );
