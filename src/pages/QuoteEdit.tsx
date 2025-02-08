@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { Space, CabinetItem } from '../types/quote';
 import { getQuoteById, updateQuote, QuoteData } from '../services/quoteService';
+import { getPresetValues } from '../services/presetService';
 import { SpaceSection } from '../components/quote/SpaceSection';
 
 const defaultItem: Omit<CabinetItem, 'id'> = {
@@ -18,6 +19,7 @@ export function QuoteEdit() {
   const [quote, setQuote] = useState<QuoteData | null>(null);
   const [adjustmentType, setAdjustmentType] = useState<'discount' | 'surcharge'>('discount');
   const [adjustmentPercentage, setAdjustmentPercentage] = useState(0);
+  const [taxRate, setTaxRate] = useState(0);
 
   useEffect(() => {
     if (id) {
@@ -31,6 +33,11 @@ export function QuoteEdit() {
       }
     }
   }, [id, navigate]);
+
+  useEffect(() => {
+    const presetValues = getPresetValues();
+    setTaxRate(presetValues.taxRate / 100); // Convert percentage to decimal
+  }, []);
 
   if (!quote) return null;
 
@@ -114,7 +121,7 @@ export function QuoteEdit() {
       ? (100 - adjustmentPercentage) / 100 
       : (100 + adjustmentPercentage) / 100;
     const adjustedSubtotal = subtotal * multiplier;
-    const tax = adjustedSubtotal * 0.13; // Tax rate should come from preset values
+    const tax = adjustedSubtotal * taxRate;
     const total = adjustedSubtotal + tax;
 
     setQuote(prev => ({
@@ -148,7 +155,7 @@ export function QuoteEdit() {
 
   const subtotal = calculateSubtotal();
   const adjustedSubtotal = quote.adjustedTotal || subtotal;
-  const tax = adjustedSubtotal * 0.13; // Tax rate should come from preset values
+  const tax = adjustedSubtotal * taxRate;
   const total = adjustedSubtotal + tax;
 
   return (
@@ -331,7 +338,7 @@ export function QuoteEdit() {
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
-                  <dt className="text-gray-500">Tax (13%)</dt>
+                  <dt className="text-gray-500">Tax ({(taxRate * 100).toFixed(1)}%)</dt>
                   <dd className="text-gray-900">${tax.toFixed(2)}</dd>
                 </div>
                 <div className="border-t border-gray-200 pt-3 flex justify-between">

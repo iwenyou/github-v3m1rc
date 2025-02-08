@@ -16,8 +16,8 @@ export function QuoteItem({ item, onUpdate, onDelete }: QuoteItemProps) {
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [displayedPrice, setDisplayedPrice] = useState(0);
-  const [isPriceLocked, setIsPriceLocked] = useState(true);
+  const [displayedPrice, setDisplayedPrice] = useState(item.price || 0);
+  const [isPriceLocked, setIsPriceLocked] = useState(item.isPriceLocked ?? true);
   const [count, setCount] = useState(item.count || 1);
 
   useEffect(() => {
@@ -34,13 +34,13 @@ export function QuoteItem({ item, onUpdate, onDelete }: QuoteItemProps) {
   useEffect(() => {
     const product = products.find(p => p.id === item.productId);
     setSelectedProduct(product);
-    if (product && isPriceLocked) {
+    if (product && isPriceLocked && !item.price) {
       const rules = getPricingRules();
       const calculatedPrice = calculateDisplayedPrice(product.unitCost, item.width, item.height, item.depth);
       setDisplayedPrice(calculatedPrice);
       onUpdate(item.id, { price: calculatedPrice });
     }
-  }, [item.productId, item.width, item.height, item.depth, products, isPriceLocked]);
+  }, [item.productId, item.width, item.height, item.depth, products, isPriceLocked, item.price]);
 
   const handleProductChange = (productId: string) => {
     const product = products.find(p => p.id === productId);
@@ -61,12 +61,14 @@ export function QuoteItem({ item, onUpdate, onDelete }: QuoteItemProps) {
   const handlePriceChange = (value: number) => {
     if (!isPriceLocked) {
       onUpdate(item.id, { price: value });
+      onUpdate(item.id, { isPriceLocked: false });
       setDisplayedPrice(value);
     }
   };
 
   const togglePriceLock = () => {
     setIsPriceLocked(!isPriceLocked);
+    onUpdate(item.id, { isPriceLocked: !isPriceLocked });
   };
 
   return (
