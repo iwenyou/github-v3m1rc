@@ -259,19 +259,8 @@ export function ClientQuoteView() {
         {/* Service Information */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-8">
           <div className="p-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Our Services</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-indigo-50 rounded-lg p-6">
-                <h3 className="text-lg font-medium text-indigo-900 mb-2">Delivery Service</h3>
-                <p className="text-indigo-700">
-                  The total price includes delivery to your doorstep. Our professional delivery team will ensure your cabinets arrive safely and on time.
-                </p>
-                <div className="mt-4 text-sm text-indigo-600">
-                  <strong>Delivery Fee:</strong> ${presetValues.deliveryFee.toFixed(2)} (included in total)
-                </div>
-              </div>
-              
-              <div className="bg-purple-50 rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Installation Service</h2>
+            <div className="bg-purple-50 rounded-lg p-6">
                 <h3 className="text-lg font-medium text-purple-900 mb-2">Expert Installation</h3>
                 <p className="text-purple-700">
                   We offer professional installation services by our experienced team. Our skilled craftsmen ensure perfect fitting and finishing of your cabinets.
@@ -279,7 +268,6 @@ export function ClientQuoteView() {
                 <div className="mt-4 text-sm text-purple-600">
                   <strong>Installation Rate:</strong> ${presetValues.installationFee.toFixed(2)} per day per worker
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -307,7 +295,6 @@ export function ClientQuoteView() {
               <div className="mb-6 text-sm text-gray-600 max-w-3xl mx-auto">
                 <p className="font-medium text-gray-700 mb-2">Important Notes:</p>
                 <ul className="list-disc list-inside space-y-2">
-                  <li>Total price includes delivery to your doorstep</li>
                   <li>Installation service is available at an additional cost of ${presetValues.installationFee.toFixed(2)} per day per worker</li>
                   <li>Installation timeline will be provided upon site assessment</li>
                   <li>All prices are subject to change based on site conditions and specific requirements</li>
