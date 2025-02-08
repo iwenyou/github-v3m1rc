@@ -36,7 +36,7 @@ export function App() {
           <Route path="/client/order/:id" element={<ClientOrderStatus />} />
           <Route path="/404" element={<NotFound />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/admin/create-user" element={<SignUp />} />
           
           {/* Admin Routes with Layout */}
           <Route path="/" element={<Layout />}>

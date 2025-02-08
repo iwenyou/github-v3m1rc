@@ -126,15 +126,6 @@ export function Login() {
                 </span>
               </div>
             </div>
-
-            <div className="mt-6">
-              <Link
-                to="/signup"
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                Create an account
-              </Link>
-            </div>
           </div>
         </div>
       </div>
