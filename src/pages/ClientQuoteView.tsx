@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Download, Mail, Building2, Phone, Globe, CheckCircle2 } from 'lucide-react';
 import { QuoteData } from '../services/quoteService';
 import { getQuoteById } from '../services/quoteService';
 import { getDemoQuote } from '../services/demoService';
+import { getOriginalId } from '../services/urlService';
 import { getProducts, getMaterials } from '../services/catalogService';
 import { getTemplateSettings } from '../services/templateService';
 import { getPresetValues } from '../services/presetService';
@@ -42,6 +43,7 @@ export function ClientQuoteView() {
     fontFamily: template.layout.fontFamily,
     primaryColor: template.layout.primaryColor,
   };
+  const location = useLocation();
 
   useEffect(() => {
     setProducts(getProducts());
@@ -54,7 +56,12 @@ export function ClientQuoteView() {
     if (id === 'demo') {
       setQuote(getDemoQuote());
     } else if (id) {
-      const quoteData = getQuoteById(id);
+      const originalId = getOriginalId(id);
+      if (!originalId) {
+        navigate('/404');
+        return;
+      }
+      const quoteData = getQuoteById(originalId);
       if (quoteData) {
         setQuote(quoteData);
       } else {

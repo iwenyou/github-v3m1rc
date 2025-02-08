@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, Edit2, Trash2, Download, ExternalLink, ShoppingBag } from 'lucide-react';
 import { QuoteFilters } from '../components/quotes/QuoteFilters';
 import { getAllQuotes, deleteQuote, updateQuote, QuoteData } from '../services/quoteService';
+import { generateRandomUrl } from '../services/urlService';
 import { createOrderFromQuote } from '../services/orderService';
 import { useAuth } from '../contexts/AuthContext';
 import { orderStatusOptions } from './Orders';
@@ -31,7 +32,8 @@ export function Quotes() {
   };
 
   const handleClientView = (id: string) => {
-    window.open(`/client/quote/${id}`, '_blank');
+    const randomId = generateRandomUrl(id, 'quote');
+    window.open(`/client/quote/${randomId}`, '_blank');
   };
 
   const handleStatusChange = (id: string, newStatus: string) => {
