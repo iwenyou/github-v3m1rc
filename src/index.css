@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Print styles */
+@media print {
+  /* Ensure the page has no margins */
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  /* Hide unnecessary elements when printing */
+  button,
+  .print-hide {
+    display: none !important;
+  }
+
+  /* Prevent page breaks inside important elements */
+  .bg-white,
+  .shadow-lg,
+  .rounded-xl,
+  .overflow-hidden,
+  table,
+  tr,
+  .space-y-8 > * {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Remove background colors and shadows for better printing */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure white background */
+  body {
+    background: white !important;
+  }
+
+  /* Maintain layout structure */
+  .min-h-screen {
+    min-height: auto !important;
+  }
+
+  /* Ensure proper spacing */
+  .space-y-8 {
+    display: block !important;
+  }
+
+  /* Ensure tables print properly */
+  table {
+    width: 100% !important;
+  }
+
+  /* Ensure text colors print properly */
+  .text-gray-900,
+  .text-gray-600,
+  .text-indigo-600 {
+    color: black !important;
+  }
+}
